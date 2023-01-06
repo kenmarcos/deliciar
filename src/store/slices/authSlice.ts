@@ -10,19 +10,15 @@ interface User {
 }
 
 interface SliceState {
-  token: string | undefined;
-  user: User;
+  user: User | null;
 }
 
-const initialState: SliceState = { token: undefined, user: {} as User };
+const initialState: SliceState = { user: null };
 
 export const login = createAsyncThunk("auth/login", async () => {
   const result = await signInWithPopup(auth, provider);
-  const credential = GoogleAuthProvider.credentialFromResult(result);
-  const token = credential?.accessToken;
   const user = result.user;
   return {
-    token,
     user: {
       uid: user.uid,
       displayName: user.displayName,
@@ -35,27 +31,28 @@ export const login = createAsyncThunk("auth/login", async () => {
 export const logout = createAsyncThunk("auth/logout", async () => {
   await signOut(auth);
   return {
-    token: "",
-    user: {} as User,
+    user: null,
   };
 });
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    updateAuth: (state, action) => {
+      state.user = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
-      state.token = action.payload.token;
       state.user = action.payload.user;
     });
     builder.addCase(logout.fulfilled, (state, action) => {
-      state.token = action.payload.token;
       state.user = action.payload.user;
     });
   },
 });
 
-export const {} = authSlice.actions;
+export const { updateAuth } = authSlice.actions;
 
 export default authSlice.reducer;
