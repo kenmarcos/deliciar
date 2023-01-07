@@ -1,28 +1,27 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { auth } from "services/firebase";
-import { AppDispatch, RootState } from "store";
-import { updateAuth } from "store/slices/authSlice";
+import { GetServerSideProps } from "next";
+import { unstable_getServerSession } from "next-auth";
+import { getSession } from "next-auth/react";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
 const Dashboard = () => {
-  const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      const userState = user
-        ? {
-            uid: user.uid,
-            displayName: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
-          }
-        : null;
-      dispatch(updateAuth(userState));
-    });
-  }, []);
-
   return <div>Dashboard</div>;
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default Dashboard;
