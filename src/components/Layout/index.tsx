@@ -15,7 +15,7 @@ export const Layout = (props: LayoutProps) => {
     return (
       <>
         <Header />
-        <main>{props.children}</main>
+        <main className="min-h-screen">{props.children}</main>
         <Footer />
       </>
     );
@@ -24,13 +24,11 @@ export const Layout = (props: LayoutProps) => {
   return (
     <>
       <Header />
-      <main>
-        <div className="grid grid-rows-[auto_1fr] md:grid-rows-none md:grid-cols-[200px_1fr]">
+      <main className="min-h-[calc(100vh-64px-144px)]">
+        <div className="grid grid-rows-[auto_1fr] md:grid-rows-none md:grid-cols-[200px_1fr] min-h-[calc(100vh-64px-144px)]">
           <AsideBar />
 
-          <section className="mb-20 max-w-6xl mx-auto">
-            {props.children}
-          </section>
+          <section className="mb-20">{props.children}</section>
         </div>
       </main>
       <Footer />

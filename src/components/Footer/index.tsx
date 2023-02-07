@@ -11,7 +11,7 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-pink-100 py-6 border-t-8 border-pink-200">
+    <footer className="bg-pink-100 py-6 border-t-8 border-pink-200 h-36">
       <div className="max-w-6xl mx-auto">
         <p className="max-w-md mx-auto text-center mb-4 text-gray-500">
           {currentYear} — Desenvolvido por Marcos Kenji Kuribayashi 😉

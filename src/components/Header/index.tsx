@@ -17,7 +17,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="bg-white px-4 py-2 drop-shadow-md">
+    <header className="bg-white px-4 py-2 drop-shadow-md h-16">
       <div className="px-4 max-w-6xl mx-auto flex justify-between items-center">
         <Image src={logo} alt="logo" width={65} height={65} quality={100} />
 

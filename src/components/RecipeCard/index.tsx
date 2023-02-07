@@ -5,7 +5,7 @@ import logo from "/public/img/deliciar-logo.png";
 
 export const RecipeCard = () => {
   return (
-    <div className="bg-white overflow-hidden rounded-tr-sm rounded-tl-3xl rounded-br-3xl rounded-bl-sm">
+    <div className="bg-white overflow-hidden rounded-tr-sm rounded-tl-3xl rounded-br-3xl rounded-bl-sm drop-shadow-lg">
       <Image
         src={logo}
         alt="logo"

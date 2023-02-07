@@ -1,12 +1,8 @@
-import AsideBar from "components/AsideBar";
-import { Button } from "components/Button";
 import { RecipeCard } from "components/RecipeCard";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import { RiAddLine, RiSearchLine } from "react-icons/ri";
+import { RiSearchLine } from "react-icons/ri";
 
 const Dashboard = () => {
   return (
