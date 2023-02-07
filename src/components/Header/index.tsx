@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { FcGoogle } from "react-icons/fc";
 
-import logo from "../../../public/img/deliciar-logo.png";
+import logo from "/public/img/deliciar-logo.png";
 
 export const Header = () => {
   const { data: session } = useSession();

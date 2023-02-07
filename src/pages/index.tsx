@@ -12,7 +12,7 @@ export default function Home() {
       <Head>
         <title>Deliciar</title>
       </Head>
-      <section className="max-w-6xl mb-20 mt-3 mx-auto flex justify-center items-center">
+      <section className="mt-16 max-w-6xl mb-20 mx-auto flex justify-center items-center">
         <div className="drop-shadow-xl">
           <h1 className="leading-snug text-6xl text-white font-bold text-center mb-6 rounded-md">
             Venha se{" "}
@@ -32,7 +32,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto flex justify-center items-center">
+      <section className="mb-20 max-w-6xl mx-auto flex justify-center items-center">
         <div className="flex flex-col md:flex-row justify-center gap-24 md:gap-12">
           <FeatureCard
             imageSrc={book}
@@ -58,43 +58,6 @@ export default function Home() {
                 tudo o que precisa na ponta dos dedos, sem precisar separar
                 pilhas de livros ou pesquisar em infinitas páginas da web."
           />
-          {/* <div className="sm:w-1/3 bg-pink-200 p-6 text-gray-500 rounded-md border-2 border-gray-400">
-                <div className="flex justify-center mb-4">
-                  <Image
-                    className="border-2 border-gray-400 rounded-full p-2"
-                    src={film}
-                    alt="Filme de vídeo"
-                    width={90}
-                    height={90}
-                  />
-                </div>
-                <h3 className="font-bold text-lg sm:text-xl mb-4">
-                  Desvende os segredos da cozinha com os vídeos das receitas
-                </h3>
-                <p className="text-justify">
-                  Leve suas habilidades culinárias a um nível totalmente novo e
-                  tenha em mãos vídeos passo-a-passo de cada receita.
-                </p>
-              </div>
-              <div className="sm:w-1/3 bg-pink-200 p-6 rounded-md border-2 border-gray-400">
-                <div className="flex justify-center mb-4">
-                  <Image
-                    className="border-2 border-gray-400 rounded-full p-2"
-                    src={food}
-                    alt="Vegetais"
-                    width={90}
-                    height={90}
-                  />
-                </div>
-                <h3 className="font-bold text-lg sm:text-xl mb-4">
-                  Assuma o controle de sua cozinha com Deliciar
-                </h3>
-                <p className="text-justify">
-                  Gerencie facilmente suas receitas, para que você possa ter
-                  tudo o que precisa na ponta dos dedos, sem precisar separar
-                  pilhas de livros ou pesquisar em infinitas páginas da web.
-                </p>
-              </div> */}
         </div>
       </section>
     </>
