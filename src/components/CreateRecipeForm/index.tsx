@@ -81,18 +81,36 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
     >
       <div>
         <label htmlFor="name">Nome</label>
-        <Input id="name" name="name" type="text" register={register("name")} />
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          register={register("name")}
+          error={errors.name?.message}
+        />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <div>
           <label htmlFor="image">Imagem</label>
-          <Input id="image" type="file" register={register("image")} />
+          <Input
+            id="image"
+            type="file"
+            register={register("image")}
+            containerClassName="p-0 overflow-hidden"
+            className="file:bg-blue-200 file:text-white file:hover:bg-opacity-60 file:border-none file:cursor-pointer file:p-2 cursor-pointer text-gray-500 pr-1"
+            error={errors.image?.message}
+          />
         </div>
 
         <div>
           <label htmlFor="video">Link Vídeo</label>
-          <Input id="video" type="text" register={register("video")} />
+          <Input
+            id="video"
+            type="text"
+            register={register("video")}
+            error={errors.video?.message}
+          />
         </div>
       </div>
 
@@ -101,17 +119,29 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
 
         <div className="space-y-4">
           {fields.map((field, index) => (
-            <div key={field.id} className="flex gap-2">
-              <Input
-                containerClassName="flex-grow"
-                id="ingredients"
-                type="text"
-                register={register(`ingredients.${index}.ingredient`)}
-              />
+            <div key={field.id}>
+              <div className="flex gap-2">
+                <Input
+                  containerClassName={`flex-grow ${
+                    errors?.ingredients &&
+                    errors.ingredients[index]?.ingredient &&
+                    "border-red-500"
+                  }`}
+                  id="ingredients"
+                  type="text"
+                  register={register(`ingredients.${index}.ingredient`)}
+                />
 
-              <Button btn="danger" onClick={() => remove(index)}>
-                <RiDeleteBin2Fill />
-              </Button>
+                <Button btn="danger" onClick={() => remove(index)}>
+                  <RiDeleteBin2Fill />
+                </Button>
+              </div>
+
+              {!!errors?.ingredients && (
+                <small className="text-red-500">
+                  {errors.ingredients[index]?.ingredient?.message}
+                </small>
+              )}
             </div>
           ))}
 
@@ -135,10 +165,15 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
         <label htmlFor="directions">Modo de Preparo</label>
         <textarea
           id="directions"
-          className="border-[1px] border-blue-200 p-2 gap-2 bg-white rounded-md w-full outline-none text-black"
+          className={`border-[1px] ${
+            errors.directions ? "border-red-500" : "border-blue-200"
+          } p-2 gap-2 bg-white rounded-md w-full outline-none text-black`}
           rows={8}
           {...register("directions")}
         />
+        {!!errors.directions && (
+          <small className="text-red-500">{errors.directions.message}</small>
+        )}
       </div>
 
       <div className="flex justify-end gap-4">
