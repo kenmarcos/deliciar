@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import { CreateRecipeForm } from "components/CreateRecipeForm";
+import { RecipeCreateForm } from "components/CreateRecipeForm";
 
 interface ModalProps {
   title: string;
@@ -18,7 +18,7 @@ export const Modal = ({ title, open, onClose }: ModalProps) => {
 
           <hr className="my-4 border-gray-300" />
 
-          <CreateRecipeForm onClose={onClose} />
+          <RecipeCreateForm onClose={onClose} />
         </Dialog.Panel>
       </div>
     </Dialog>
