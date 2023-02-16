@@ -1,3 +1,4 @@
+import { Input } from "components/Input";
 import { RecipeCard } from "components/RecipeCard";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
@@ -15,14 +16,11 @@ const Dashboard = () => {
         <h2 className="text-3xl text-black font-extrabold">Minhas Receitas</h2>
 
         <form className="sm:w-1/2">
-          <div className="border-[1px] border-blue-200 flex items-center p-2 gap-2 bg-white rounded-md">
-            <RiSearchLine className="text-gray-500" />
-            <input
-              className="w-full bg-white outline-none text-black"
-              type="text"
-              placeholder="Pesquisar receita"
-            />
-          </div>
+          <Input
+            icon={<RiSearchLine className="text-gray-500" />}
+            type="text"
+            placeholder="Pesquisar receita"
+          />
         </form>
       </header>
 
