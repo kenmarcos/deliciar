@@ -1,6 +1,7 @@
 import { Input } from "components/Input";
 import { RecipeCard } from "components/RecipeCard";
 import { GetServerSideProps } from "next";
+import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 import { RiSearchLine } from "react-icons/ri";

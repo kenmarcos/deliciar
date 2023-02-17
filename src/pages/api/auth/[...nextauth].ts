@@ -10,7 +10,7 @@ interface SessionParams {
   token: JWT;
 }
 
-export const authOptions = {
+export default NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID as string,
@@ -19,13 +19,13 @@ export const authOptions = {
   ],
 
   callbacks: {
-    async session({ session, user, token }: SessionParams) {
+    session({ session, user, token }: SessionParams) {
       return {
         ...session,
-        id: token.sub,
+        id: token.sub as string,
       };
     },
   },
-};
+});
 
-export default NextAuth(authOptions);
+// export default NextAuth(authOptions);

@@ -4,6 +4,16 @@ import { RiAddLine, RiDeleteBin2Fill } from "react-icons/ri";
 import * as yup from "yup";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { db, storage } from "services/firebase";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { getSession, useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
 interface RecipeCreateFormValues {
   name: string;
@@ -13,6 +23,10 @@ interface RecipeCreateFormValues {
     ingredient: string;
   }[];
   directions: string;
+}
+
+interface CustomSessions extends Session {
+  id: string;
 }
 interface RecipeCreateFormProps {
   onClose: () => void;
@@ -31,6 +45,9 @@ function isValidFileType(fileName: any) {
 }
 
 export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
+  const { data: session } = useSession();
+  const userId = session?.id;
+
   const schema = yup.object().shape({
     name: yup.string().required("*Campo obrigatório").trim(),
     image: yup
@@ -70,8 +87,65 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
     control,
   });
 
-  const onSubmitData = (data: any) => {
-    console.log(data);
+  const onSubmitData = async (data: RecipeCreateFormValues) => {
+    if (data.image) {
+      const imageRef = ref(storage, `images/${userId}/${data.image.name}`);
+      const uploadTask = uploadBytesResumable(imageRef, data.image);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Observe state change events such as progress, pause, and resume
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("O Upload está " + progress + "% feito");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("O Upload está pausado");
+              break;
+            case "running":
+              console.log("O Upload está sendo executado");
+              break;
+          }
+        },
+        (error) => {
+          // Handle unsuccessful uploads
+          alert("Ocorreu um erro, tente novamente!");
+        },
+        () => {
+          // Handle successful uploads on complete
+          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            try {
+              await addDoc(
+                collection(db, "users", userId as string, "recipes"),
+                {
+                  name: data.name,
+                  image: downloadURL,
+                  video: data.video,
+                  ingredients: data.ingredients,
+                  directions: data.directions,
+                }
+              );
+            } catch (error) {
+              console.log(error);
+            }
+          });
+        }
+      );
+    } else {
+      try {
+        await addDoc(collection(db, "users", "idDoUsuário", "recipes"), {
+          name: data.name,
+          video: data.video,
+          ingredients: data.ingredients,
+          directions: data.directions,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
