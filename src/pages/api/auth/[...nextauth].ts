@@ -1,14 +1,5 @@
-import { Session, User } from "next-auth";
-import { AdapterUser } from "next-auth/adapters";
-import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
-
-interface SessionParams {
-  session: Session;
-  user: User | AdapterUser;
-  token: JWT;
-}
 
 export default NextAuth({
   providers: [
@@ -19,13 +10,11 @@ export default NextAuth({
   ],
 
   callbacks: {
-    session({ session, user, token }: SessionParams) {
+    session({ session, user, token }) {
       return {
         ...session,
-        id: token.sub as string,
+        id: token.sub,
       };
     },
   },
 });
-
-// export default NextAuth(authOptions);

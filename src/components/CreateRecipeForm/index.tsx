@@ -136,7 +136,7 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
       );
     } else {
       try {
-        await addDoc(collection(db, "users", "idDoUsuário", "recipes"), {
+        await addDoc(collection(db, "users", userId as string, "recipes"), {
           name: data.name,
           video: data.video,
           ingredients: data.ingredients,

@@ -1,12 +1,21 @@
 import { Input } from "components/Input";
 import { RecipeCard } from "components/RecipeCard";
 import { GetServerSideProps } from "next";
-import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 import { RiSearchLine } from "react-icons/ri";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "services/firebase";
+import { Recipe } from "types";
+import { useEffect, useState } from "react";
 
-const Dashboard = () => {
+interface DashboardProps {
+  allRecipes: Recipe[];
+}
+
+const Dashboard = ({ allRecipes }: DashboardProps) => {
+  const [recipes, setRecipes] = useState(allRecipes);
+
   return (
     <>
       <Head>
@@ -26,15 +35,9 @@ const Dashboard = () => {
       </header>
 
       <div className="max-w-sm sm:max-w-none mx-auto px-4 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
+        {recipes.map((recipe) => (
+          <RecipeCard key={recipe.name} recipe={recipe} />
+        ))}
       </div>
     </>
   );
@@ -52,8 +55,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     };
   }
 
+  const subColRef = collection(db, "users", session.id as string, "recipes");
+  const querySnapshot = await getDocs(subColRef);
+
+  const allRecipes = querySnapshot.docs.map((doc) => doc.data());
+
   return {
-    props: {},
+    props: {
+      allRecipes,
+    },
   };
 };
 
