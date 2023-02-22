@@ -25,10 +25,10 @@ const Favorites = () => {
       </header>
 
       <div className="max-w-sm sm:max-w-none mx-auto px-4 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+        {/* <RecipeCard />
         <RecipeCard />
         <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
+        <RecipeCard /> */}
       </div>
     </>
   );

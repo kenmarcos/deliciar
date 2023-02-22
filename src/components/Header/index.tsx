@@ -19,7 +19,7 @@ export const Header = () => {
   return (
     <header className="bg-white px-4 py-2 drop-shadow-md h-16">
       <div className="px-4 max-w-6xl mx-auto flex justify-between items-center">
-        <Image src={logo} alt="logo" width={65} height={65} quality={100} />
+        <Image src={logo} alt="logo" width={64} quality={100} />
 
         {!session ? (
           <button
@@ -33,9 +33,10 @@ export const Header = () => {
           <div className="flex items-center gap-4">
             <Image
               src={session?.user?.image as string}
+              alt="profile image"
               width={40}
               height={40}
-              alt="profile image"
+              quality={100}
               className="rounded-full"
             />
 

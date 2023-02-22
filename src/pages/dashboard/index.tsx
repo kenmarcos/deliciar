@@ -3,9 +3,29 @@ import { RecipeCard } from "components/RecipeCard";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
-import { RiSearchLine } from "react-icons/ri";
+import { RiErrorWarningLine, RiSearchLine } from "react-icons/ri";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "services/firebase";
+import { Recipe } from "types";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "store";
+import { getAllRecipes } from "store/slices/recipesSlice";
+import { EmptyList } from "components/EmptyList";
 
-const Dashboard = () => {
+interface DashboardProps {
+  allRecipes: Recipe[];
+}
+
+const Dashboard = ({ allRecipes }: DashboardProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const recipes = useSelector((store: RootState) => store.recipes);
+
+  useEffect(() => {
+    dispatch(getAllRecipes(allRecipes));
+  }, []);
+
   return (
     <>
       <Head>
@@ -24,17 +44,24 @@ const Dashboard = () => {
         </form>
       </header>
 
-      <div className="max-w-sm sm:max-w-none mx-auto px-4 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-      </div>
+      <section className="max-w-sm sm:max-w-none mx-auto px-4">
+        {!!recipes.length && (
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+            {recipes.map((recipe) => (
+              <li key={recipe.id}>
+                <RecipeCard recipe={recipe} />
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {!recipes.length && (
+          <EmptyList
+            title="A sua lista de receitas está vazia!"
+            subtitle="Para adicionar uma receita, clique no botão 'Nova Receita'."
+          />
+        )}
+      </section>
     </>
   );
 };
@@ -51,8 +78,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     };
   }
 
+  const subColRef = collection(db, "users", session.id as string, "recipes");
+  const querySnapshot = await getDocs(subColRef);
+
+  const allRecipes = querySnapshot.docs.map((doc) => {
+    return { ...doc.data(), id: doc.id };
+  });
+
   return {
-    props: {},
+    props: {
+      allRecipes,
+    },
   };
 };
 

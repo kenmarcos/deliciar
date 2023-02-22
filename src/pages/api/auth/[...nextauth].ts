@@ -1,16 +1,7 @@
-import { Session, User } from "next-auth";
-import { AdapterUser } from "next-auth/adapters";
-import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 
-interface SessionParams {
-  session: Session;
-  user: User | AdapterUser;
-  token: JWT;
-}
-
-export const authOptions = {
+export default NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID as string,
@@ -19,13 +10,11 @@ export const authOptions = {
   ],
 
   callbacks: {
-    async session({ session, user, token }: SessionParams) {
+    session({ session, user, token }) {
       return {
         ...session,
         id: token.sub,
       };
     },
   },
-};
-
-export default NextAuth(authOptions);
+});
