@@ -1,19 +1,19 @@
 import { Button } from "components/Button";
 import { Input } from "components/Input";
-import { RiAddLine, RiDeleteBin2Fill } from "react-icons/ri";
+import { RiAddLine, RiDeleteBin2Fill, RiLoader4Fill } from "react-icons/ri";
 import * as yup from "yup";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { db, storage } from "services/firebase";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { getSession, useSession } from "next-auth/react";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { addDoc, collection } from "firebase/firestore";
+import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "store";
+import { addRecipe } from "store/slices/recipesSlice";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 interface RecipeCreateFormValues {
   name: string;
@@ -47,6 +47,10 @@ function isValidFileType(fileName: any) {
 export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
   const { data: session } = useSession();
   const userId = session?.id;
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const schema = yup.object().shape({
     name: yup.string().required("*Campo obrigatório").trim(),
@@ -88,6 +92,8 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
   });
 
   const onSubmitData = async (data: RecipeCreateFormValues) => {
+    setIsLoading(true);
+
     if (data.image) {
       const imageRef = ref(storage, `images/${userId}/${data.image.name}`);
       const uploadTask = uploadBytesResumable(imageRef, data.image);
@@ -118,34 +124,67 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             try {
-              await addDoc(
+              const recipeData = {
+                name: data.name,
+                image: downloadURL,
+                video: data.video,
+                ingredients: data.ingredients,
+                directions: data.directions,
+              };
+
+              const recipeDoc = await addDoc(
                 collection(db, "users", userId as string, "recipes"),
-                {
-                  name: data.name,
-                  image: downloadURL,
-                  video: data.video,
-                  ingredients: data.ingredients,
-                  directions: data.directions,
-                }
+                recipeData
               );
+
+              toast.success("Receita adicionada com sucesso!");
+
+              const newRecipe = {
+                id: recipeDoc.id,
+                ...recipeData,
+              };
+
+              dispatch(addRecipe(newRecipe));
+
+              onClose();
             } catch (error) {
               console.log(error);
+              toast.error("Houve um erro. Por favor, tente novamente.");
             }
           });
         }
       );
     } else {
       try {
-        await addDoc(collection(db, "users", userId as string, "recipes"), {
+        const recipeData = {
           name: data.name,
           video: data.video,
           ingredients: data.ingredients,
           directions: data.directions,
-        });
+        };
+
+        const recipeDoc = await addDoc(
+          collection(db, "users", userId as string, "recipes"),
+          recipeData
+        );
+
+        toast.success("Receita adicionada com sucesso!");
+
+        const newRecipe = {
+          id: recipeDoc.id,
+          ...recipeData,
+        };
+
+        dispatch(addRecipe(newRecipe));
+
+        onClose();
       } catch (error) {
         console.log(error);
+        toast.error("Houve um erro. Por favor, tente novamente.");
       }
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -260,7 +299,11 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
           Cancelar
         </Button>
         <Button className="text-lg" type="submit">
-          Salvar
+          {!!isLoading ? (
+            <RiLoader4Fill size={26} className="animate-spin" />
+          ) : (
+            "Salvar"
+          )}
         </Button>
       </div>
     </form>
