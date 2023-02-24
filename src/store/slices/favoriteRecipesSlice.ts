@@ -10,19 +10,9 @@ const favoriteRecipesSlice = createSlice({
     getFavoriteRecipes: (state, action) => {
       return [...action.payload];
     },
-    addInFavoriteRecipes: (state, action) => {
-      return [...state, action.payload];
-    },
-    removeFromFavoriteRecipes: (state, action) => {
-      return state.filter((recipe) => recipe.id !== action.payload);
-    },
   },
 });
 
-export const {
-  getFavoriteRecipes,
-  addInFavoriteRecipes,
-  removeFromFavoriteRecipes,
-} = favoriteRecipesSlice.actions;
+export const { getFavoriteRecipes } = favoriteRecipesSlice.actions;
 
 export const favoriteRecipesReducer = favoriteRecipesSlice.reducer;

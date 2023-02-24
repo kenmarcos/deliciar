@@ -3,12 +3,8 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
-import { useEffect } from "react";
 import { RiSearchLine } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
 import { db } from "services/firebase";
-import { AppDispatch, RootState } from "store";
-import { getFavoriteRecipes } from "store/slices/favoriteRecipesSlice";
 import { Recipe } from "types";
 
 interface FavoritesProps {
@@ -16,16 +12,6 @@ interface FavoritesProps {
 }
 
 const Favorites = ({ favorites }: FavoritesProps) => {
-  const dispatch = useDispatch<AppDispatch>();
-
-  const favoriteRecipes = useSelector(
-    (store: RootState) => store.favoriteRecipes
-  );
-
-  useEffect(() => {
-    dispatch(getFavoriteRecipes(favorites));
-  }, []);
-
   return (
     <>
       <Head>
@@ -48,11 +34,11 @@ const Favorites = ({ favorites }: FavoritesProps) => {
       </header>
 
       <section className="max-w-sm sm:max-w-none mx-auto px-4">
-        {!!favoriteRecipes.length && (
+        {!!favorites.length && (
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
-            {favoriteRecipes.map((recipe) => (
-              <li key={recipe.id}>
-                <RecipeCard recipe={recipe} />
+            {favorites.map((favorite) => (
+              <li key={favorite.id}>
+                <RecipeCard recipe={favorite} />
               </li>
             ))}
           </ul>
