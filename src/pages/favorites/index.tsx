@@ -1,8 +1,17 @@
 import { RecipeCard } from "components/RecipeCard";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
 import Head from "next/head";
 import { RiSearchLine } from "react-icons/ri";
+import { db } from "services/firebase";
+import { Recipe } from "types";
 
-const Favorites = () => {
+interface FavoritesProps {
+  favorites: Recipe[];
+}
+
+const Favorites = ({ favorites }: FavoritesProps) => {
   return (
     <>
       <Head>
@@ -24,14 +33,47 @@ const Favorites = () => {
         </form>
       </header>
 
-      <div className="max-w-sm sm:max-w-none mx-auto px-4 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
-        {/* <RecipeCard />
-        <RecipeCard />
-        <RecipeCard />
-        <RecipeCard /> */}
-      </div>
+      <section className="max-w-sm sm:max-w-none mx-auto px-4">
+        {!!favorites.length && (
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+            {favorites.map((favorite) => (
+              <li key={favorite.id}>
+                <RecipeCard recipe={favorite} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  const subColRef = collection(db, "users", session.id as string, "recipes");
+  const querySnapshot = await getDocs(
+    query(subColRef, where("isFavorite", "==", true))
+  );
+
+  const favorites = querySnapshot.docs.map((doc) => {
+    return { ...doc.data(), id: doc.id };
+  });
+
+  return {
+    props: {
+      favorites,
+    },
+  };
 };
 
 export default Favorites;

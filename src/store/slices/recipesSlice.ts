@@ -5,7 +5,7 @@ const initialState: Recipe[] = [];
 
 const recipesSlice = createSlice({
   name: "recipes",
-  initialState: initialState,
+  initialState,
   reducers: {
     getAllRecipes: (state, action) => {
       return [...action.payload];

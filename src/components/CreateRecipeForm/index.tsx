@@ -14,6 +14,7 @@ import { AppDispatch } from "store";
 import { addRecipe } from "store/slices/recipesSlice";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/router";
 
 interface RecipeCreateFormValues {
   name: string;
@@ -48,9 +49,9 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
   const { data: session } = useSession();
   const userId = session?.id;
 
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  const dispatch = useDispatch<AppDispatch>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const schema = yup.object().shape({
     name: yup.string().required("*Campo obrigatório").trim(),
@@ -130,21 +131,17 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
                 video: data.video,
                 ingredients: data.ingredients,
                 directions: data.directions,
+                isFavorite: false,
               };
 
-              const recipeDoc = await addDoc(
+              await addDoc(
                 collection(db, "users", userId as string, "recipes"),
                 recipeData
               );
 
               toast.success("Receita adicionada com sucesso!");
 
-              const newRecipe = {
-                id: recipeDoc.id,
-                ...recipeData,
-              };
-
-              dispatch(addRecipe(newRecipe));
+              router.replace(router.asPath);
 
               onClose();
             } catch (error) {
@@ -161,21 +158,17 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
           video: data.video,
           ingredients: data.ingredients,
           directions: data.directions,
+          isFavorite: false,
         };
 
-        const recipeDoc = await addDoc(
+        await addDoc(
           collection(db, "users", userId as string, "recipes"),
           recipeData
         );
 
         toast.success("Receita adicionada com sucesso!");
 
-        const newRecipe = {
-          id: recipeDoc.id,
-          ...recipeData,
-        };
-
-        dispatch(addRecipe(newRecipe));
+        router.replace(router.asPath);
 
         onClose();
       } catch (error) {
