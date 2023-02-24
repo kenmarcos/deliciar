@@ -245,7 +245,7 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
                   register={register(`ingredients.${index}.ingredient`)}
                 />
 
-                <Button btn="danger" onClick={() => remove(index)}>
+                <Button className="btn-danger" onClick={() => remove(index)}>
                   <RiDeleteBin2Fill />
                 </Button>
               </div>
@@ -260,8 +260,7 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
 
           <Button
             type="button"
-            btn="outline-primary"
-            className="w-full justify-center"
+            className="btn-outline-primary w-full justify-center"
             onClick={() =>
               append({
                 ingredient: "",
@@ -291,14 +290,13 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
 
       <div className="flex justify-end gap-4">
         <Button
-          className="text-lg"
+          className="btn-outline-primary text-lg"
           type="button"
-          btn="outline-primary"
           onClick={onClose}
         >
           Cancelar
         </Button>
-        <Button className="text-lg" type="submit">
+        <Button className="btn-primary text-lg" type="submit">
           {!!isLoading ? (
             <RiLoader4Fill size={26} className="animate-spin" />
           ) : (

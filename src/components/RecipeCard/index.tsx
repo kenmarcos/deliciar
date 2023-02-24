@@ -25,9 +25,11 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
       <h3 className="p-4 text-xl text-gray-500">{recipe.name}</h3>
 
       <div className="p-4 border-t-[1px] border-pink-200 flex justify-between items-center">
-        <Button>Ver Receita</Button>
+        <Button className="btn-primary">Ver Receita</Button>
 
-        <RiHeart3Fill size={25} />
+        <Button>
+          <RiHeart3Fill size={25} />
+        </Button>
       </div>
     </div>
   );

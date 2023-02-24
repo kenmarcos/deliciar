@@ -18,7 +18,10 @@ const AsideBar = () => {
       <aside className="bg-pink-100 flex justify-center border-b-8 md:border-b-0 border-pink-200">
         <div className="flex flex-col gap-4 items-center md:items-start">
           <div className="pt-4">
-            <Button className="text-xl" onClick={() => setIsModalOpen(true)}>
+            <Button
+              className="btn-primary text-xl"
+              onClick={() => setIsModalOpen(true)}
+            >
               <RiAddLine size={28} />
               Nova Receita
             </Button>
