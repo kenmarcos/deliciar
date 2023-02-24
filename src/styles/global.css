@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply flex items-center gap-2 font-black rounded-md p-2 drop-shadow-lg;
+  }
+
+  .btn-primary {
+    @apply bg-blue-200 text-white duration-300 hover:bg-opacity-60;
+  }
+
+  .btn-outline-primary {
+    @apply border border-blue-200 text-blue-200 hover:bg-blue-200 hover:text-white;
+  }
+
+  .btn-danger {
+    @apply bg-red-500 text-white duration-300 hover:bg-opacity-60;
+  }
+}

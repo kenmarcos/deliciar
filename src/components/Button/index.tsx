@@ -2,29 +2,11 @@ import { ButtonHTMLAttributes, ReactNode } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  btn?: "primary" | "outline-primary" | "danger";
 }
 
-export const Button = ({ children, btn = "primary", ...rest }: ButtonProps) => {
-  let btnStyle = "";
-  switch (btn) {
-    case "primary":
-      btnStyle = "bg-blue-200 text-white duration-300 hover:bg-opacity-60";
-      break;
-    case "outline-primary":
-      btnStyle =
-        "border border-blue-200 text-blue-200 hover:bg-blue-200 hover:text-white";
-      break;
-    case "danger":
-      btnStyle = "bg-red-500 text-white duration-300 hover:bg-opacity-60";
-      break;
-  }
-
+export const Button = ({ children, ...rest }: ButtonProps) => {
   return (
-    <button
-      {...rest}
-      className={`${btnStyle} ${rest.className} flex items-center gap-2 font-black rounded-md p-2 drop-shadow-lg`}
-    >
+    <button {...rest} className={`btn ${rest.className}`}>
       {children}
     </button>
   );
