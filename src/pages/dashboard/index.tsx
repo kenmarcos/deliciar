@@ -3,7 +3,7 @@ import { RecipeCard } from "components/RecipeCard";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
-import { RiErrorWarningLine, RiSearchLine } from "react-icons/ri";
+import { RiSearchLine } from "react-icons/ri";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "services/firebase";
 import { Recipe } from "types";

@@ -130,6 +130,7 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
                 video: data.video,
                 ingredients: data.ingredients,
                 directions: data.directions,
+                isFavorite: false,
               };
 
               const recipeDoc = await addDoc(
@@ -161,6 +162,7 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
           video: data.video,
           ingredients: data.ingredients,
           directions: data.directions,
+          isFavorite: false,
         };
 
         const recipeDoc = await addDoc(
