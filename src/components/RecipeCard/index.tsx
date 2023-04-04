@@ -2,6 +2,7 @@ import { Button } from "components/Button";
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { RiHeart3Fill, RiHeart3Line } from "react-icons/ri";
@@ -53,7 +54,9 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
       <h3 className="p-4 text-xl text-gray-500">{recipe.name}</h3>
 
       <div className="p-4 border-t-[1px] border-pink-200 flex justify-between items-center">
-        <Button className="btn-primary">Ver Receita</Button>
+        <Link href={`/recipe/${recipe.id}`} className="btn btn-primary">
+          Ver Receita
+        </Link>
 
         <Button onClick={handleToggle}>
           {!isFavorite && <RiHeart3Line className="text-red-600" size={25} />}

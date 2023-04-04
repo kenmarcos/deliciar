@@ -23,13 +23,13 @@ const Dashboard = ({ allRecipes }: DashboardProps) => {
       <header className="p-6 flex flex-col gap-2 sm:flex-row sm:justify-between">
         <h2 className="text-3xl text-black font-extrabold">Minhas Receitas</h2>
 
-        <form className="sm:w-1/2">
+        {/* <form className="sm:w-1/2">
           <Input
             icon={<RiSearchLine className="text-gray-500" />}
             type="text"
             placeholder="Pesquisar receita"
           />
-        </form>
+        </form> */}
       </header>
 
       <section className="max-w-sm sm:max-w-none mx-auto px-4">

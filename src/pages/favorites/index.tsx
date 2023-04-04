@@ -1,3 +1,4 @@
+import { EmptyList } from "components/EmptyList";
 import { RecipeCard } from "components/RecipeCard";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { GetServerSideProps } from "next";
@@ -21,7 +22,7 @@ const Favorites = ({ favorites }: FavoritesProps) => {
       <header className="p-6 flex flex-col gap-2 sm:flex-row sm:justify-between">
         <h2 className="text-3xl text-black font-extrabold">Favoritos</h2>
 
-        <form className="sm:w-1/2">
+        {/* <form className="sm:w-1/2">
           <div className="border-[1px] border-blue-200 flex items-center p-2 gap-2 bg-white rounded-md">
             <RiSearchLine className="text-gray-500" />
             <input
@@ -30,7 +31,7 @@ const Favorites = ({ favorites }: FavoritesProps) => {
               placeholder="Pesquisar receita"
             />
           </div>
-        </form>
+        </form> */}
       </header>
 
       <section className="max-w-sm sm:max-w-none mx-auto px-4">
@@ -42,6 +43,10 @@ const Favorites = ({ favorites }: FavoritesProps) => {
               </li>
             ))}
           </ul>
+        )}
+
+        {!favorites.length && (
+          <EmptyList title="A sua lista de favoritos está vazia!" />
         )}
       </section>
     </>

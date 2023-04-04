@@ -9,26 +9,11 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "store";
-import { addRecipe } from "store/slices/recipesSlice";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
+import { RecipeCreateFormValues } from "types";
 
-interface RecipeCreateFormValues {
-  name: string;
-  image: File;
-  video: string;
-  ingredients: {
-    ingredient: string;
-  }[];
-  directions: string;
-}
-
-interface CustomSessions extends Session {
-  id: string;
-}
 interface RecipeCreateFormProps {
   onClose: () => void;
 }
@@ -39,11 +24,12 @@ const validFileExtensions = {
   image: ["jpg", "gif", "png", "jpeg", "svg", "webp"],
 };
 
-function isValidFileType(fileName: any) {
+const isValidFileType = (fileName?: string) => {
   return fileName
-    ? validFileExtensions.image.indexOf(fileName.split(".").pop()) > -1
+    ? validFileExtensions.image.indexOf(fileName.split(".").pop() as string) >
+        -1
     : true;
-}
+};
 
 export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
   const { data: session } = useSession();
@@ -61,7 +47,7 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
       .test(
         "is-valid-type",
         "Somente arquivos do tipo .jpg, .gif, .png, .jpeg, .svg ou .webp são aceitos",
-        (file) => isValidFileType(file && file.name.toLowerCase())
+        (file) => isValidFileType(file?.name?.toLowerCase())
       )
       .test(
         "is-valid-size",

@@ -9,10 +9,6 @@ import { Modal } from "components/Modal";
 const AsideBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleDeactivate = () => {
-    // ...
-  };
-
   return (
     <>
       <aside className="bg-pink-100 flex justify-center border-b-8 md:border-b-0 border-pink-200">
