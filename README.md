@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<!-- CABEÇALHO -->
+<div id="readme-top" align="center">
+    <h1>
+        <img width=200 src="/public/img/deliciar-logo.png" alt="logo de Deliciar" />
+    </h1>
+    <p>
+        <a href="#%EF%B8%8F-sobre-o-projeto">Sobre o Projeto</a> •
+        <a href="#-funcionalidades">Funcionalidades</a> •
+        <a href="#-layout">Layout</a> •
+        <a href="#%EF%B8%8F-tecnologias">Tecnologias</a> •
+        <a href="#-autor">Autor</a>
+    </p>
+</div>
 
-## Getting Started
+<!-- SOBRE O PROJETO -->
 
-First, run the development server:
+## 🖥️ Sobre o Projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<div align="center">
+    <img src="/public/img/home-page.png" width=800/>
+    <br/>
+    <br/>
+    <a href="https://deliciar.vercel.app/">
+        <img src="https://img.shields.io/badge/demo-ver%20aplicação-blue?style=for-the-badge" alt="badge-usage" >
+    </a>
+</div>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<br/>
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+> Projeto pessoal com o objetivo de aprimorar habilidades, principalmente em Firebase e Next.js.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Deliciar é um livro de receitas culinárias digital. 👨‍🍳
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Com ele é possível armazenar receitas culinárias, descrever os ingredientes necessários, descrever o modo de preparo, adicionar vídeos e selecionar as receitas favoritas.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+A aplicação foi desenvolvido utilizando TypeScript, Next.js, React, Tailwind CSS, Firebase, entre outras tecnologias.
 
-## Learn More
+A aplicação conta com autenticação através de Conta Google.
 
-To learn more about Next.js, take a look at the following resources:
+<!-- FUNCIONALIDADES -->
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 💡 Funcionalidades
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- [x] Tela Home
+  - [x] Login com Google
+- [x] Tela "Dashboard"
+  - [x] Lista de receitas cadastradas
+  - [x] Adicionar nova receita
+  - [x] Excluir receita
+- [x] Tela de Receitas Favoritas
+  - [x] Lista de receitas favoritas
+- [x] Tela de Detalhes da receita
+  - [x] Vídeo e informações da Receita
+  - [x] Excluir receita
 
-## Deploy on Vercel
+<!-- LAYOUT -->
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎨 Layout
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<p align="center">
+  <img src="/public/img/dashboard-page.png" width=500>
+
+  <img src="/public/img/recipe-addition.png" width=500>
+
+  <img src="/public/img/recipe-page.png" width=500>
+</p>
+
+<!-- TECNOLOGIAS -->
+
+## 🛠️ Tecnologias
+
+Para o desenvolvimento desse projeto, as seguintes ferramentas foram utilizadas:
+
+- **[React.js](https://pt-br.reactjs.org/)**
+- **[Next.js](https://nextjs.org/)**
+- **[TypeScript](https://www.typescriptlang.org/)**
+- **[Redux](https://redux.js.org/)**
+- **[Tailwind CSS](https://tailwindcss.com/)**
+- **[Firebase](https://firebase.google.com/?hl=pt)**
+- **[Headless UI](https://headlessui.com/)**
+- **[Next Auth](https://next-auth.js.org/)**
+- **[React Hook Form](https://www.react-hook-form.com/)**
+- **[Yup](https://www.npmjs.com/package/yup)**
+
+## 👨‍💻 Autor
+
+<img style="border-radius: 15%;" src="https://gitlab.com/uploads/-/system/user/avatar/8603970/avatar.png?width=400" width=70 alt="author-profile-picture"/>
+
+Marcos Kenji Kuribayashi
+
+[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/marcos-kuribayashi/) [![Gmail Badge](https://img.shields.io/badge/-marcosken13@gmail.com-c14438?style=flat&logo=Gmail&logoColor=white)](mailto:marcosken13@gmail.com)
+
+---
+
+Desenvolvido por Marcos Kenji Kuribayashi 😉
