@@ -1,9 +1,14 @@
+import { Button } from "components/Button";
+import { Modal } from "components/Modal";
+import RecipeDeletion from "components/RecipeDeletion";
 import { collection, doc, getDoc, query } from "firebase/firestore";
 import { GetServerSideProps, GetStaticProps } from "next";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { db } from "services/firebase";
 import { Recipe } from "types";
 import { getVideoId } from "utils";
@@ -13,14 +18,25 @@ interface RecipeDetailsProps {
 }
 
 const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  console.log(recipe);
+
   return (
     <>
       <Head>
         <title>Deliciar - Detalhes da Receita</title>
       </Head>
 
-      <header className="p-6">
+      <header className="p-6 flex justify-between">
         <h2 className="text-3xl text-black font-extrabold">{recipe.name}</h2>
+
+        <Button
+          className="hover:scale-105"
+          onClick={() => setModalIsOpen(true)}
+        >
+          <RiDeleteBin6Line size={24} className="text-gray-500" />
+        </Button>
       </header>
 
       <section className="max-w-sm sm:max-w-none mx-auto px-4">
@@ -80,6 +96,17 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
           </div>
         </div>
       </section>
+
+      <Modal
+        title="Excluir Receita"
+        open={modalIsOpen}
+        onClose={() => setModalIsOpen(false)}
+      >
+        <RecipeDeletion
+          onClose={() => setModalIsOpen(false)}
+          recipeId={recipe.id}
+        />
+      </Modal>
     </>
   );
 };
@@ -104,7 +131,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const docRef = doc(subColRef, recipeId as string);
   const docSnap = await getDoc(docRef);
 
-  const recipe = docSnap.data();
+  const recipe = { ...docSnap.data(), id: docSnap.id };
 
   return {
     props: {

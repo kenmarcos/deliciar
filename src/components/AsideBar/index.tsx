@@ -1,13 +1,12 @@
 import { ActiveLink } from "components/ActiveLink";
 import { Button } from "components/Button";
 import { RiAddLine } from "react-icons/ri";
-import { Dialog } from "@headlessui/react";
 import { useState } from "react";
-import { Input } from "components/Input";
 import { Modal } from "components/Modal";
+import { RecipeCreateForm } from "components/CreateRecipeForm";
 
 const AsideBar = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   return (
     <>
@@ -16,7 +15,7 @@ const AsideBar = () => {
           <div className="pt-4">
             <Button
               className="btn-primary text-xl"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setModalIsOpen(true)}
             >
               <RiAddLine size={28} />
               Nova Receita
@@ -37,9 +36,11 @@ const AsideBar = () => {
 
       <Modal
         title="Adicionar Receita"
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+        open={modalIsOpen}
+        onClose={() => setModalIsOpen(false)}
+      >
+        <RecipeCreateForm onClose={() => setModalIsOpen(false)} />
+      </Modal>
     </>
   );
 };

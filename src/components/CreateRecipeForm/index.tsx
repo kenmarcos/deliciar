@@ -8,7 +8,6 @@ import { db, storage } from "services/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
@@ -127,9 +126,14 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
 
               toast.success("Receita adicionada com sucesso!");
 
-              router.replace(router.asPath);
-
               onClose();
+
+              if (router.asPath !== "/dashboard") {
+                router.replace("/dashboard");
+                return;
+              }
+
+              router.replace(router.asPath);
             } catch (error) {
               console.log(error);
               toast.error("Houve um erro. Por favor, tente novamente.");
@@ -154,9 +158,14 @@ export const RecipeCreateForm = ({ onClose }: RecipeCreateFormProps) => {
 
         toast.success("Receita adicionada com sucesso!");
 
-        router.replace(router.asPath);
-
         onClose();
+
+        if (router.asPath !== "/dashboard") {
+          router.replace("/dashboard");
+          return;
+        }
+
+        router.replace(router.asPath);
       } catch (error) {
         console.log(error);
         toast.error("Houve um erro. Por favor, tente novamente.");
