@@ -17,7 +17,7 @@
 ## 🖥️ Sobre o Projeto
 
 <div align="center">
-    <img src=".github/img/home-page.png" width=800/>
+    <img src=".github/home-page.png" width=800/>
     <br/>
     <br/>
     <a href="https://deliciar.vercel.app/">
@@ -58,11 +58,11 @@ A aplicação conta com autenticação através de Conta Google.
 ## 🎨 Layout
 
 <p align="center">
-  <img src=".github/img/dashboard-page.png" width=500>
+  <img src=".github/dashboard-page.png" width=500>
 
-  <img src=".github/img/recipe-addition.png" width=500>
+  <img src=".github/recipe-addition.png" width=500>
 
-  <img src=".github/img/recipe-page.png" width=500>
+  <img src=".github/recipe-page.png" width=500>
 </p>
 
 <!-- TECNOLOGIAS -->
